@@ -1,0 +1,13 @@
+{
+    "name": "carloscarrinho/backendhibrido",
+    "description": "API de listagem, inserção, alteração e remoção de clientes.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Carlos Eduardo Ferreira Carrinho",
+            "email": "carrinhoedu@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

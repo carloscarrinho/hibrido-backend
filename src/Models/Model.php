@@ -3,6 +3,7 @@
 namespace Source\Models;
 
 use PDOException;
+use Source\Services\Log;
 use Source\Services\Connection;
 
 class Model
@@ -47,27 +48,35 @@ class Model
     public function store(array $data): string
     {
         $columns = implode(", ", array_keys($data));
-        $values = implode(", ", array_values($data));
+        $values = ":" . implode(", :", array_keys($data));
         $this->query = "INSERT INTO " . self::$entity . " ({$columns}) VALUES ({$values})";
 
         try {
             $pdo = Connection::connect();
             $pdo->beginTransaction();
             $stmt = $pdo->prepare($this->query);
-            $stmt->execute();
+            $stmt->execute($this->filter($data));
             $pdo->commit();
             $this->message = "Registro efetuado com sucesso";
             return $this->message;
 
         } catch (PDOException $exception) {
-            // $log = new Log();
-            // $log->warning($exception->getMessage(), ["logger" => true]);
-            $this->message = "Não foi possível efetuar o registro";
+            $log = new Log();
+            $log->warning($exception->getMessage(), ["logger" => true]);
             if($pdo) {
                 $pdo->rollBack();
             }
+            $this->message = "Não foi possível efetuar o registro.";
             return $this->message;
         }
     }
 
+    private function filter(array $data): ?array
+    {
+        $filter = [];
+        foreach ($data as $key => $value) {
+            $filter[$key] = (is_null($value) ? null : filter_var($value, FILTER_DEFAULT));
+        }
+        return $filter;
+    }
 }

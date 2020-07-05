@@ -14,7 +14,7 @@ $router->get("/clientes", function () {
 
 $router->post("/clientes", function () {
     $customer = new CustomerController();
-    return $customer->store();
+    return $customer->register();
 });
 
 $router->put("/clientes/{cpf}", function ($cpf) {

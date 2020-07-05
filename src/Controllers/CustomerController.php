@@ -2,40 +2,42 @@
 
 namespace Source\Controllers;
 
-use Source\Models\User;
+use Source\Models\Customer;
 
 class CustomerController
 {
     public function index()
     {
-        $user = new User();
-        // $user->find();
+        $customer = new Customer();
+        // $customer->find();
     }
     
-    public function store()
+    public function register()
     {
         $body = file_get_contents("php://input");
         $data = json_decode($body, true);
         
-        $user = new User();
-        $user->store($data);
+        $customer = new Customer();
+        $message = $customer->register($data);
 
+        header("Content-type: application/json");
+        echo json_encode($message, JSON_PRETTY_PRINT);
     }
     
     public function update($data)
     {
-        $param['cpf'] = intval($data);
+        $param['cpf'] = $data;
         $body = file_get_contents("php://input");
         $json = json_decode($body, true);
         $data = $param + $json;
 
-        $user = new User();
-        // $user->updateUser($data);
+        $customer = new Customer();
+        // $customer->updateUser($data);
     }
     
     public function destroy($data)
     {
-        $user = new User();
-        // $user->destroy(["cpf" => $data]);
+        $customer = new Customer();
+        // $customer->destroy(["cpf" => $data]);
     }
 }

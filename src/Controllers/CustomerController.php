@@ -2,12 +2,14 @@
 
 namespace Source\Controllers;
 
+use Source\Models\User;
+
 class CustomerController
 {
     public function index()
     {
         $user = new User();
-        $user->find();
+        // $user->find();
     }
     
     public function store()
@@ -28,12 +30,12 @@ class CustomerController
         $data = $param + $json;
 
         $user = new User();
-        $user->alter($data);
+        // $user->updateUser($data);
     }
     
     public function destroy($data)
     {
         $user = new User();
-        $user->destroy(["cpf" => $data]);
+        // $user->destroy(["cpf" => $data]);
     }
 }

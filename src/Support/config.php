@@ -3,6 +3,7 @@
 ### URLs ###
 define('CFG_URL_BASE', 'http://localhost:8001');
 
+
 ### DATABASE ###
 define('CFG_DB_MYSQL', "mysql:host=" . CFG_DB_HOST . ";dbname=" . CFG_DB_NAME);
 define('CFG_DB_DRIVER', 'mysql');
@@ -16,3 +17,7 @@ define('CFG_DB_OPTIONS', [
     \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
     \PDO::ATTR_CASE => \PDO::CASE_NATURAL
 ]);
+
+
+### LOG ###
+define('CFG_LOG_FILE', __DIR__ . '/../Storage/Logs/log.txt');

@@ -17,14 +17,14 @@ $router->post("/clientes", function () {
     return $customer->store();
 });
 
-$router->put("/clientes/{cpf}", function () {
+$router->put("/clientes/{cpf}", function ($cpf) {
     $customer = new CustomerController();
-    return $customer->update();
+    return $customer->update($cpf);
 });
 
-$router->delete("/clientes/{cpf}", function () {
+$router->delete("/clientes/{cpf}", function ($cpf) {
     $customer = new CustomerController();
-    return $customer->delete();
+    return $customer->delete($cpf);
 });
 
 $router->run();

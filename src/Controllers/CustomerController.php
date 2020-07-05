@@ -6,21 +6,34 @@ class CustomerController
 {
     public function index()
     {
-        echo "Olá Index";
+        $user = new User();
+        $user->find();
     }
     
     public function store()
     {
-        echo "Olá Store";
+        $body = file_get_contents("php://input");
+        $data = json_decode($body, true);
+        
+        $user = new User();
+        $user->store($data);
+
     }
     
-    public function update()
+    public function update($data)
     {
-        echo "Olá Update";
+        $param['cpf'] = intval($data);
+        $body = file_get_contents("php://input");
+        $json = json_decode($body, true);
+        $data = $param + $json;
+
+        $user = new User();
+        $user->alter($data);
     }
     
-    public function delete()
+    public function destroy($data)
     {
-        echo "Olá Delete";
+        $user = new User();
+        $user->destroy(["cpf" => $data]);
     }
 }

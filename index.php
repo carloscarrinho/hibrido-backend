@@ -24,7 +24,7 @@ $router->put("/clientes/{cpf}", function ($cpf) {
 
 $router->delete("/clientes/{cpf}", function ($cpf) {
     $customer = new CustomerController();
-    return $customer->delete($cpf);
+    return $customer->destroy($cpf);
 });
 
 $router->run();

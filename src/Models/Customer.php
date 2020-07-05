@@ -2,6 +2,10 @@
 
 namespace Source\Models;
 
+use PDO;
+use PDOException;
+use Source\Services\Connection;
+
 class Customer extends Model
 {
     public function __construct()
@@ -37,6 +41,20 @@ class Customer extends Model
         }
 
         return true;
+    }
+
+    public function find(string $columns = "*", string $params = null, $terms = null)
+    {
+        $this->query = $this->read($columns, $params, $terms);
+
+        try {
+            $pdo = Connection::connect();
+            $users = $pdo->query($this->query);
+            return $users->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $exception) {
+            var_dump($exception);
+        }
     }
 
     public function register(array $data): string
@@ -82,6 +100,17 @@ class Customer extends Model
         $customerCpf = [ "cpf" => "'{$data['cpf']}'"];
 
         $this->update($customerCpf, $customerInfo);
+        return $this->message;
+    }
+
+    public function remove(array $data): string
+    {
+        if (!isset($data['cpf']) || !is_cpf($data['cpf']) ) {
+            $this->message = "CPF inválido, por favor tente novamente.";
+            return $this->message;
+        }
+
+        $this->delete($data);
         return $this->message;
     }
 

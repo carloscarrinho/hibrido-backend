@@ -116,6 +116,43 @@ class Model
         }
     }
 
+    public function delete(array $terms)
+    {
+        $termsSet = [];
+        foreach($terms as $bind => $value) {
+            $termsSet[] = "{$bind} = {$value}";
+        }
+        $termsSet = implode(", ", $termsSet);
+
+        $this->query = "DELETE FROM " . self::$entity . " WHERE {$termsSet}";
+
+        try {
+            $pdo = Connection::connect();
+            $stmt = $pdo->query("SELECT * FROM " . self::$entity . " WHERE {$termsSet}");
+            $found = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(count($found) <= 0) {
+                $this->message = "Registro inexistente no banco.";
+                return $this->message;
+            }
+            
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare($this->query);
+            $stmt->execute();
+            $pdo->commit();
+            $this->message = "Registro removido com sucesso.";
+            return $this->message;
+
+        } catch (PDOException $exception) {
+            $this->message = "Não foi possível remover o registro.";
+            $log = new Log();
+            $log->warning($exception->getMessage(), ["logger" => true]);
+            if($pdo) {
+                $pdo->rollBack();
+            }
+            return $this->message;
+        }   
+    }
+
     private function filter(array $data): ?array
     {
         $filter = [];

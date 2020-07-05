@@ -9,7 +9,7 @@ class CustomerController
     public function index()
     {
         $customer = new Customer();
-        // $customer->find();
+        $customer->find();
     }
     
     public function register()
@@ -38,9 +38,12 @@ class CustomerController
         echo json_encode($message, JSON_PRETTY_PRINT);
     }
     
-    public function destroy($data)
+    public function remove($data)
     {
         $customer = new Customer();
-        // $customer->destroy(["cpf" => $data]);
+        $message = $customer->remove(["cpf" => $data]);
+
+        header("Content-type: application/json");
+        echo json_encode($message, JSON_PRETTY_PRINT);
     }
 }

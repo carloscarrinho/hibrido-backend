@@ -9,7 +9,7 @@ class Connection
     public static $instance;
 
     public static function connect(
-        string $dsn = CFG_DB_MYSQL,
+        string $dsn = "mysql:host=localhost;dbname=hibridobackend",
         string $username = CFG_DB_USER,
         string $password = CFG_DB_PASSWORD
     ): ?PDO {

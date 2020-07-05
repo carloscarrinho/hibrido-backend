@@ -5,7 +5,7 @@ namespace Source\Models;
 use PDOException;
 use Source\Services\Connection;
 
-class Models
+class Model
 {
     protected $fail;
 

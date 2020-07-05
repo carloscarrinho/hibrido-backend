@@ -9,5 +9,17 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "Hibrido\\": "src/"
+        },
+        "files": [
+            "src/Support/config.php",
+            "src/Support/helpers.php"
+        ]
+    },
+    "require": {
+        "coffeecode/router": "^1.0",
+        "monolog/monolog": "2.0"
+    }
 }

@@ -11,7 +11,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Hibrido\\": "src/"
+            "Source\\": "src/"
         },
         "files": [
             "src/Support/config.php",
@@ -20,6 +20,7 @@
     },
     "require": {
         "coffeecode/router": "^1.0",
-        "monolog/monolog": "2.0"
+        "monolog/monolog": "2.0",
+        "bramus/router": "^1.4"
     }
 }

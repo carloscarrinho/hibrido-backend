@@ -59,4 +59,30 @@ class Customer extends Model
         $this->query = $this->store($customer);
         return $this->message;
     }
+
+    public function updateCustomer(array $data): string
+    {
+        $isValid = $this->validateCustomerInfo($data);
+        if (!$isValid) {
+            $this->message = $this->fail;
+            return $this->message;
+        }
+
+        $customerInfo = [];
+        if(isset($data['name'])) {
+            $customerInfo['name'] = "'{$data['name']}'";
+        }
+
+        $customerInfo['email'] = "'{$data['email']}'";
+
+        if(isset($data['phone'])) {
+            $customerInfo['phone'] = "'{$data['phone']}'";
+        }
+
+        $customerCpf = [ "cpf" => "'{$data['cpf']}'"];
+
+        $this->update($customerCpf, $customerInfo);
+        return $this->message;
+    }
+
 }

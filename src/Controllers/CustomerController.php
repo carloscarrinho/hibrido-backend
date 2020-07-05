@@ -32,7 +32,10 @@ class CustomerController
         $data = $param + $json;
 
         $customer = new Customer();
-        // $customer->updateUser($data);
+        $message = $customer->updateCustomer($data);
+
+        header("Content-type: application/json");
+        echo json_encode($message, JSON_PRETTY_PRINT);
     }
     
     public function destroy($data)

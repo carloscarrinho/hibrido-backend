@@ -2,6 +2,7 @@
 
 namespace Source\Models;
 
+use PDO;
 use PDOException;
 use Source\Services\Log;
 use Source\Services\Connection;
@@ -67,6 +68,50 @@ class Model
                 $pdo->rollBack();
             }
             $this->message = "Não foi possível efetuar o registro.";
+            return $this->message;
+        }
+    }
+
+    public function update(array $terms, array $data): string
+    {
+        $termsSet = [];
+        foreach ($terms as $bind => $value) {
+            $termsSet[] = "{$bind} = {$value}";
+        }
+        $termsSet = implode(", ", $termsSet);
+
+        $dataSet = [];
+        foreach($data as $bind => $value) {
+            $dataSet[] = "{$bind} = {$value}"; 
+        }
+        $dataSet = implode(", ", $dataSet);
+
+        $this->query = "UPDATE " . self::$entity . " SET {$dataSet} WHERE {$termsSet}";
+
+        try {
+            $pdo = Connection::connect();
+            $stmt = $pdo->query("SELECT * FROM " . self::$entity . " WHERE {$termsSet}");
+            $found = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(count($found) <= 0) {
+                $this->message = "Registro inexistente no banco.";
+                return $this->message;
+            }
+
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare($this->query);
+            $stmt->execute();
+            $pdo->commit();
+
+            $this->message = "Registro alterado com sucesso.";
+            return $this->message;
+            
+        } catch (PDOException $exception) {
+            $log = new Log();
+            $log->warning($exception->getMessage(), ["logger" => true]);
+            $this->message = "Não foi possível alterar o registro.";
+            if($pdo) {
+                $pdo->rollBack();
+            }
             return $this->message;
         }
     }

@@ -1,6 +1,11 @@
 # Hibrido | Teste Backend
 
-## Como rodar a aplicação:
+## Índice
+- [Como rodar a aplicação](#rodaraplicacao)
+- [Arquiteturas](#arquiteturas)
+- [Bibliotecas de terceiros](#bibliotecasdeterceiros)
+
+## <a href="rodaraplicacao"></a>Como rodar a aplicação:
 
 Para rodar a aplicação, será necessário:
 
@@ -61,11 +66,9 @@ Boas opções de plataformas para consumo de API REST:
 
 **1)** Fazer uma requisição com o **método GET** para a URL: ```/clientes```, retorna todos os clientes armazenados no banco em formato **JSON**;
 
-**2)** Fazer uma requisição com o **método GET** para a URL: ```/clientes/{cpf}```, enviando na URL:
-- O **cpf** do cliente que se deseja buscar (ex: "/clientes/12345678910");
+**2)** Fazer uma requisição com o **método GET** para a URL: ```/clientes/{cpf}```, enviando na URL o **cpf** do cliente que se deseja buscar (ex: "/clientes/12345678910");
 
-**3)** Fazer uma requisição com o **método POST** para a URL: ```/clientes```, enviando: 
-- Um **JSON** no corpo da requisição com os dados necessários para cadastro.
+**3)** Fazer uma requisição com o **método POST** para a URL: ```/clientes```, enviando um **JSON** no corpo da requisição com os dados necessários para cadastro.
 
 Exemplo:
 ```json
@@ -92,8 +95,51 @@ Exemplo:
 ```
 Retorna a resposta se a alteração foi bem sucedida ou não, em formato **JSON**;
 
-**5)** Fazer uma requisição com o **método DELETE** para a URL: ```/clientes/{cpf}```, enviando na URL:
-- O **cpf** do cliente que se deseja remover (ex: "/clientes/12345678910");
+**5)** Fazer uma requisição com o **método DELETE** para a URL: ```/clientes/{cpf}```, enviando na URL o **cpf** do cliente que se deseja remover (ex: "/clientes/12345678910");
 
 
-## Arquiteturas
+## <a name="arquiteturas"></a>Arquiteturas
+
+### MVC
+A construção da arquitetura da aplicação se baseou no conceito Model-View-Controller (MVC), porém, sem a camada "View", já que se trata de uma API.
+
+A estrutura de pastas e arquivos é a seguinte:
+```
+src
+    Controllers
+        CustomerController.php
+    Database
+        database.sqlite
+    Models
+        Model.php
+        Customer.php
+    Services
+        Connection.php
+        Log.php
+    Storage
+        Logs
+            log.txt      
+    Support
+        config.php
+        helpers.php
+vendor
+index.php
+```
+
+- **index.php:** Ponto de entrada de aplicação e que implementa as rotas conforme a URL requisitada;
+- **Controllers/CustomerController.php:** Classe que recebe as requisições, encaminha para tratamento e devolve a resposta ao cliente;
+- **Models/Model.php:** Classe responsável por realizar a comunicação com o banco de dados (Layer Supertype Pattern);
+- **Models/Customer.php:** Classe responsável por implementar as regras de negócio associadas a entidade cliente (customer);
+- **Services/Connection.php:** Classe que abstrai a conexão com o banco de dados (Static Creation Method Pattern);
+- **Services/Log.php:** Classe que abstrai as funcionalidades do componente "monolog" para o controle de logs da aplicação conforme recomendações da "PSR 3 Logger Interface";
+- **Storage/Logs/log.txt:** Arquivo que recebe os logs da aplicação;
+- **Support/config.php:** Arquivo que centraliza constantes da aplicação;
+- **Support/helpers.php:** Arquivo que implementa funções de apoio (helpers) para otimização das classes e métodos.
+- **vendor:** Diretório que armazena as dependências da aplicação.
+
+## <a name="bibliotecasdeterceiros"></a>Biblioteca de Terceiros
+
+### bramus/router
+
+
+### monolog/monolog

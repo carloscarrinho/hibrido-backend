@@ -7,27 +7,36 @@ use PDOException;
 use Source\Services\Log;
 use Source\Services\Connection;
 
+/**
+ * Model Class | Responsável pela comunicação com o banco de dados 
+ */
 class Model
 {
-    protected $fail;
+    protected string $fail;
 
-    protected $message;
+    protected string $message;
 
-    protected $query;
-
-    protected $params;
-
-    protected $limit;
-
-    protected $offset;
+    protected string $query;
 
     protected static $entity;
-
+    
+    /**
+     * Método construtor da classe Model
+     * Layer Supertype Pattern
+     * @param  mixed $entity
+     * @return void
+     */
     public function __construct(string $entity)
     {
         self::$entity = $entity;
     }
-
+    
+    /**
+     * Método que abstrai a leitura de dados no banco
+     *
+     * @param  array $terms
+     * @return array
+     */
     public function read(array $terms = null): array
     {
         $pdo = Connection::connect();
@@ -50,7 +59,13 @@ class Model
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-
+    
+    /**
+     * Método que abstrai a inserção de dados no banco
+     *
+     * @param  array $data
+     * @return string
+     */
     public function store(array $data): string
     {
         $columns = implode(", ", array_keys($data));
@@ -76,7 +91,14 @@ class Model
             return $this->message;
         }
     }
-
+    
+    /**
+     * Método que abstrai a alteração de dados no banco
+     *
+     * @param  array $terms
+     * @param  array $data
+     * @return string
+     */
     public function update(array $terms, array $data): string
     {
         $termsSet = [];
@@ -120,7 +142,13 @@ class Model
             return $this->message;
         }
     }
-
+    
+    /**
+     * Método que abstrai a remoção de dados no banco
+     *
+     * @param  array $terms
+     * @return void
+     */
     public function delete(array $terms)
     {
         $termsSet = [];
@@ -157,7 +185,13 @@ class Model
             return $this->message;
         }   
     }
-
+    
+    /**
+     * Método que filtra as chaves e valores para apoio aos métodos que implementam as queries
+     *
+     * @param  array $data
+     * @return array
+     */
     private function filter(array $data): ?array
     {
         $filter = [];

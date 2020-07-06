@@ -6,13 +6,27 @@ use PDO;
 use PDOException;
 use Source\Services\Connection;
 
+/**
+ * Customer Class | Responsável pelas regras de negócio específicas associadas a entidade cliente
+ */
 class Customer extends Model
-{
+{    
+    /**
+     * Método construtor da Classe Customer, estende as funcionalidades da classe Model
+     * Active Record Pattern
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct('clients');
     }
-
+    
+    /**
+     * Método de validação dos dados recebidos do cliente
+     *
+     * @param  array $data
+     * @return bool
+     */
     private function validateCustomerInfo(array $data): bool
     {
         if (!isset($data['cpf'])) {
@@ -42,7 +56,13 @@ class Customer extends Model
 
         return true;
     }
-
+    
+    /**
+     * Método de busca de clientes
+     *
+     * @param  array $data
+     * @return array
+     */
     public function find(array $data = null): array
     {
         if (isset($data['cpf']) && !is_cpf($data['cpf']) ) {
@@ -53,7 +73,13 @@ class Customer extends Model
         $customer = $this->read($data);
         return $customer;
     }
-
+    
+    /**
+     * Método de cadastro de cliente
+     *
+     * @param  mixed $data
+     * @return string
+     */
     public function register(array $data): string
     {
         $isValid = $this->validateCustomerInfo($data);
@@ -74,7 +100,13 @@ class Customer extends Model
         $this->query = $this->store($customer);
         return $this->message;
     }
-
+    
+    /**
+     * Método de atualização dos dados de um cliente
+     *
+     * @param  array $data
+     * @return string
+     */
     public function updateCustomer(array $data): string
     {
         $isValid = $this->validateCustomerInfo($data);
@@ -99,7 +131,13 @@ class Customer extends Model
         $this->update($customerCpf, $customerInfo);
         return $this->message;
     }
-
+    
+    /**
+     * Método de remoção de um cliente
+     *
+     * @param  mixed $data
+     * @return string
+     */
     public function remove(array $data): string
     {
         if (!isset($data['cpf']) || !is_cpf($data['cpf']) ) {

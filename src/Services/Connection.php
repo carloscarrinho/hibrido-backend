@@ -4,10 +4,19 @@ namespace Source\Services;
 
 use PDO;
 
+/**
+ * Connection Class | Responsável pela conexão com o banco de dados
+ * Static Creation Method Pattern
+ */
 class Connection
 {
     public static $instance;
-
+    
+    /**
+     * Método de conexão com o banco de dados
+     *
+     * @return void
+     */
     public static function connect(
         string $dsn = "mysql:host=localhost;dbname=hibridobackend",
         string $username = CFG_DB_USER,

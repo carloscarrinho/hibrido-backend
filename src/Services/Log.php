@@ -6,10 +6,19 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\BrowserConsoleHandler;
 
+/**
+ * Log Class | Responsável por abstrair o controle de logs da aplicação com base
+ * nas recomendações da "PSR-3 Logger Interface"
+ */
 class Log
 {
     public $logger;
-
+    
+    /**
+     * Método construtor da classe que abstrai as funcionalidades do componente Monolog
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->logger = new Logger("api");
@@ -31,42 +40,98 @@ class Log
             return $record;
         });
     }
-
+    
+    /**
+     * Método que lança os logs classificados como "emergency"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function emergency(string $message, array $context)
     {
         $this->logger->emergency($message, $context);
     }
-
+    
+    /**
+     * Método que lança os logs classificados como "alert"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function alert(string $message, array $context)
     {
         $this->logger->alert($message, $context);
     }
-
+    
+    /**
+     * Método que lança os logs classificados como "critical"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function critical(string $message, array $context)
     {
         $this->logger->critical($message, $context);
     }
-
+    
+    /**
+     * Método que lança os logs classificados como "error"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function error(string $message, array $context)
     {
         $this->logger->error($message, $context);
     }
-    
+        
+    /**
+     * Método que lança os logs classificados como "warning"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function warning(string $message, array $context)
     {
         $this->logger->warning($message, $context);
     }
-
+    
+    /**
+     * Método que lança os logs classificados como "notice"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function notice(string $message, array $context)
     {
         $this->logger->notice($message, $context);
     }
-    
+        
+    /**
+     * Método que lança os logs classificados como "info"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function info(string $message, array $context)
     {
         $this->logger->info($message, $context);
     }
-    
+        
+    /**
+     * Método que lança os logs classificados como "debug"
+     *
+     * @param  string $message
+     * @param  array $context
+     * @return void
+     */
     public function debug(string $message, array $context)
     {
         $this->logger->debug($message, $context);

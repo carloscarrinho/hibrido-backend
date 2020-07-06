@@ -5,6 +5,7 @@ use Source\Controllers\CustomerController;
 
 require __DIR__ . "/vendor/autoload.php";
 
+/** ROUTES */
 $router = new Router();
 
 $router->get("/clientes", function () {

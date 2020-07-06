@@ -191,7 +191,7 @@ $router->put("/clientes/{cpf}", function ($cpf) {
 - **Para rota COM acesso a recursos específicos:** utiliza-se a mesma estrutura anterior, porém, passa-se o recurso que deve ser acessado como parâmetro da callback function e, por sua vez, para o método que será ativado.
 
 ### <a name="monolog"></a>monolog/monolog
-Monolog é uma biblioteca que facilita a construção de logs para aplicação. A sua documentação completa pode ser acessada em: https://packagist.org/packages/monolog/monolog.
+Monolog é uma biblioteca que facilita a construção de logs para a aplicação. A sua documentação completa pode ser acessada em: https://packagist.org/packages/monolog/monolog.
 
 #### Uso
 Após a instalação através do composer:
@@ -227,7 +227,7 @@ logger->warning('Mensagem a ser registrada');
 logger->info('Mensagem a ser registrada');
 ```
 
-É possível, ainda, configurar informações "extras" que deverão ser registradas em cada log da aplicação. Para isso, fazemos uso do método **pushProcessor()**, passando para ele uma _callback function_ que recebe um **array** como parâmetro. Nesse **array**, podemos acessar a **chave "extra"** e adicionar determinadas informações, utilizando, por exemplo, a constante $_SERVER, que traz diversas informações sobre o servidor da aplicação. Permitindo assim uma melhor apuração dos problemas encontrados.
+É possível, ainda, configurar informações "extras" que deverão ser registradas em cada log da aplicação. Para isso, fazemos uso do método **pushProcessor()**, passando para ele uma _callback function_ que recebe um **array** como parâmetro. Nesse **array**, podemos acessar a **chave "extra"** e adicionar determinadas informações, utilizando, por exemplo, a constante $_SERVER, que traz diversos dados sobre o servidor da aplicação. Permitindo assim uma melhor apuração dos problemas encontrados.
 
 Exemplo:
 ```php

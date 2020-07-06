@@ -11,7 +11,15 @@
 
 Para rodar a aplicação, será necessário:
 
-### 1 Configurar a conexão com o banco de dados MySQL
+### 1 Baixar as dependências do projeto
+Após clonar ou baixar o projeto, basta navegar até o diretório onde o projeto foi armazenado e rodar o comando a seguir:
+
+```bash
+composer install
+```
+> obs: é necessário ter o composer instalado.
+
+### 2 Configurar a conexão com o banco de dados MySQL
 No arquivo **src/Support/config.php** existem as constantes predefinidas. Será necessário apenas modificar os valores de **host** e **dbname** na constante "**CGF_DB_MYSQL**" e  os valores de "**CFG_DB_USER**" e "**CFG_DB_PASSWORD**". 
 
 ```php
@@ -23,10 +31,12 @@ define('CFG_DB_USER', 'root');
 define('CFG_DB_PASSWORD', '1234');
 ```
 
-### Criar a estrutura da tabela "clients"
+### 3 Criar a estrutura da tabela "clients"
 
-Para criar a estrutura da tabela de clientes, pode ser utilizado o script abaixo, lembrando que no lugar de "hibridobackend" deve ser passado o nome do banco definido no passo anterior.
+Para criar a estrutura da tabela de clientes, podem ser utilizados os scripts abaixo, lembrando que no lugar de "hibridobackend" deve ser passado o nome do banco definido no passo anterior.
 ```sql
+CREATE DATABASE hibridobackend;
+
 USE hibridobackend;
 
 CREATE TABLE IF NOT EXISTS clients (
@@ -53,14 +63,14 @@ INSERT
         (65432109876, 'Robert Lewandowski', 'lewandowski@mail.com', '31999995555');
 ```
 
-### 2 Subir um servidor HTTP:
+### 4 Subir um servidor HTTP:
 
 Recomendo utilizar o próprio servidor embutido do PHP, rodando o seguinte comando:
 ```bash
 php -S localhost:8080 
 ```
 
-### 3 Consumir as rotas:
+### 5 Consumir as rotas:
 
 Boas opções de plataformas para consumo de API REST: 
 - Insomnia: https://insomnia.rest/download/ 
@@ -137,7 +147,9 @@ index.php
 - **Storage/Logs/log.txt:** Arquivo que recebe os logs da aplicação;
 - **Support/config.php:** Arquivo que centraliza constantes da aplicação;
 - **Support/helpers.php:** Arquivo que implementa funções de apoio (helpers) para otimização das classes e métodos.
-- **vendor:** Diretório que armazena as dependências da aplicação.
+- **vendor:** Diretório que armazena as dependências da aplicação;
+- **.editorconfig:** Arquivo que estabelece uma padronização basica do editor para os códigos (identação, charser, etc.);
+- **.htacess:** Arquivo que permite a utilização de URL amigáveis.
 
 ## <a name="bibliotecasdeterceiros"></a>Biblioteca de Terceiros
 Foram utilizadas duas bibliotecas de terceiros para construção da API:

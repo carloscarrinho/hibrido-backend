@@ -17,13 +17,9 @@ class Connection
      *
      * @return void
      */
-    public static function connect(
-        string $dsn = "mysql:host=localhost;dbname=hibridobackend",
-        string $username = CFG_DB_USER,
-        string $password = CFG_DB_PASSWORD
-    ): ?PDO {
+    public static function connect(): ?PDO {
         if(empty(self::$instance)) {
-            self::$instance = new PDO($dsn, $username, $password);
+            self::$instance = new PDO(CFG_DB_MYSQL, CFG_DB_USER, CFG_DB_PASSWORD);
             self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$instance;

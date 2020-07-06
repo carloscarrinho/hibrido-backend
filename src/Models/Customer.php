@@ -43,18 +43,15 @@ class Customer extends Model
         return true;
     }
 
-    public function find(string $columns = "*", string $params = null, $terms = null)
+    public function find(array $data = null): array
     {
-        $this->query = $this->read($columns, $params, $terms);
-
-        try {
-            $pdo = Connection::connect();
-            $users = $pdo->query($this->query);
-            return $users->fetchAll(PDO::FETCH_ASSOC);
-
-        } catch (PDOException $exception) {
-            var_dump($exception);
+        if (isset($data['cpf']) && !is_cpf($data['cpf']) ) {
+            $this->message = "CPF inválido, por favor tente novamente.";
+            return $this->message;
         }
+
+        $customer = $this->read($data);
+        return $customer;
     }
 
     public function register(array $data): string

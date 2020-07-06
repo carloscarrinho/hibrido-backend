@@ -28,22 +28,27 @@ class Model
         self::$entity = $entity;
     }
 
-    public function read(string $columns = "*", string $params = null, $terms = null)
+    public function read(array $terms = null): array
     {
-        if($params){
-            if (is_string($terms)) {
-                $this->query = "SELECT {$columns} FROM " . self::$entity . " WHERE {$params} = '{$terms}'";
-                parse_str($params, $this->params);
-                return $this->query;
+        $pdo = Connection::connect();
+        
+        if($terms) {
+            $termsSet = [];
+            foreach ($terms as $bind => $value) {
+                $termsSet[] = "{$bind} = '{$value}'";
             }
+            $termsSet = implode(", ", $termsSet);
 
-            $this->query = "SELECT {$columns} FROM " . self::$entity . " WHERE {$params} = {$terms}";
-            parse_str($params, $this->params);
-            return $this->query;
+            $this->query = "SELECT * FROM " . self::$entity . " WHERE {$termsSet}";
+            $stmt = $pdo->query($this->query);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
         }
 
-        $this->query = "SELECT $columns FROM " . self::$entity;
-        return $this->query;
+        $this->query = "SELECT * FROM " . self::$entity;
+        $stmt = $pdo->query($this->query);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function store(array $data): string

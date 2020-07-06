@@ -9,7 +9,12 @@ $router = new Router();
 
 $router->get("/clientes", function () {
     $customer = new CustomerController();
-    return $customer->index();
+    return $customer->findAll();
+});
+
+$router->get("/clientes/{cpf}", function ($cpf) {
+    $customer = new CustomerController();
+    return $customer->findOne($cpf);
 });
 
 $router->post("/clientes", function () {

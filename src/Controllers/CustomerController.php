@@ -6,10 +6,23 @@ use Source\Models\Customer;
 
 class CustomerController
 {
-    public function index()
+    public function findAll()
     {
         $customer = new Customer();
-        $customer->find();
+        $result = $customer->find();
+
+        header("Content-type: application/json");
+        echo json_encode($result, JSON_PRETTY_PRINT);
+    }
+    
+    public function findOne(string $data)
+    {
+        $param['cpf'] = $data; 
+        $customer = new Customer();
+        $result = $customer->find($param);
+
+        header("Content-type: application/json");
+        echo json_encode($result, JSON_PRETTY_PRINT);
     }
     
     public function register()
@@ -24,7 +37,7 @@ class CustomerController
         echo json_encode($message, JSON_PRETTY_PRINT);
     }
     
-    public function update($data)
+    public function update(string $data)
     {
         $param['cpf'] = $data;
         $body = file_get_contents("php://input");
@@ -38,7 +51,7 @@ class CustomerController
         echo json_encode($message, JSON_PRETTY_PRINT);
     }
     
-    public function remove($data)
+    public function remove(string $data)
     {
         $customer = new Customer();
         $message = $customer->remove(["cpf" => $data]);

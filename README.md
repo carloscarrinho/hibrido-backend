@@ -181,7 +181,7 @@ $router = new Router();
 $router->run();
 ```
 
-### Definir as rotas
+#### Definir as rotas
 A biblioteca suporta variadas formas de definição das rotas. A que foi escolhida para o projeto foi a seguinte:
 
 ```php
